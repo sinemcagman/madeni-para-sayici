@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Program çıktıları
+cikti/
+
+# Editör / işletim sistemi
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
