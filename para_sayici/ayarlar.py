@@ -16,6 +16,11 @@ SIGMA_ARKAPLAN = 40
 # gürültüye bağlayan ince köprüleri koparır. 0 verilirse açma yapılmaz.
 ACMA_YARICAPI = 4
 
+# Işık düzeltilmiş görüntünün standart sapması bunun altındaysa görüntüde
+# nesne yok sayılır. (Otsu her görüntüyü zorla ikiye böler; boş bir
+# görüntüde bile sahte "para" uydurmasını bu kontrol engeller.)
+MIN_KONTRAST = 0.02
+
 # Bundan küçük alanlı (piksel) bölgeler para değil, gürültü sayılır.
 MIN_ALAN = 400
 

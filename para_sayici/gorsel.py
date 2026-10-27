@@ -25,7 +25,10 @@ def adimlari_kaydet(sonuc, yol):
     b.set_title("2) Işık düzeltilmiş")
 
     c.imshow(sonuc.maske, cmap="gray")
-    c.set_title(f"3) Otsu maskesi (eşik = {sonuc.esik:.3f})")
+    if sonuc.esik is None:
+        c.set_title("3) Maske (kontrast yetersiz, nesne yok)")
+    else:
+        c.set_title(f"3) Otsu maskesi (eşik = {sonuc.esik:.3f})")
 
     d.imshow(color.label2rgb(sonuc.etiket, image=sonuc.gri, bg_label=0, alpha=0.35))
     for p in sonuc.paralar:

@@ -43,7 +43,7 @@ class Sonuc:
     """Sayma işleminin tüm çıktıları."""
 
     sayi: int
-    esik: float
+    esik: float | None  # None: görüntüde yeterli kontrast yok
     paralar: list = field(default_factory=list)
     gri: np.ndarray = field(default=None, repr=False)
     duz: np.ndarray = field(default=None, repr=False)
@@ -65,7 +65,11 @@ def maske_olustur(duz, ters=False):
     """Otsu eşiği ile ikili (True/False) maske üretir; delikleri doldurur.
 
     ters=True: nesneler arka plandan KOYU ise kullanılır.
+    Kontrast çok düşükse (nesne yoksa) boş maske ve esik=None döner.
     """
+    if duz.std() < ayarlar.MIN_KONTRAST:
+        return np.zeros(duz.shape, dtype=bool), None
+
     esik = filters.threshold_otsu(duz)
     maske = duz < esik if ters else duz > esik
     maske = ndi.binary_fill_holes(maske)

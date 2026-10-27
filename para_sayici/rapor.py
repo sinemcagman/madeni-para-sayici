@@ -12,7 +12,7 @@ def rapor_sozlugu(sonuc, kaynak):
         "tarih": datetime.now().isoformat(timespec="seconds"),
         "madeni_para_sayisi": sonuc.sayi,
         "elenen_gurultu": sonuc.elenen,
-        "otsu_esigi": round(sonuc.esik, 5),
+        "otsu_esigi": None if sonuc.esik is None else round(sonuc.esik, 5),
         "paralar": [p.sozluk() for p in sonuc.paralar],
     }
 
