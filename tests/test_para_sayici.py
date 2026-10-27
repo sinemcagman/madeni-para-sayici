@@ -10,6 +10,7 @@ from pathlib import Path
 import numpy as np
 from skimage import data, util
 
+from ornekler.uret import BEKLENEN, KLASOR as ORNEK_KLASORU
 from para_sayici import ayarlar, goruntu, klasik
 from para_sayici.rapor import json_yaz
 
@@ -60,6 +61,16 @@ class GoruntuFormatTesti(unittest.TestCase):
     def test_olmayan_dosya(self):
         with self.assertRaises(FileNotFoundError):
             goruntu.yukle("olmayan_dosya.png")
+
+
+class OrnekKlasoruTesti(unittest.TestCase):
+    """ornekler/ klasöründeki, para sayısı bilinen görüntüler."""
+
+    def test_her_ornek_dogru_sayilir(self):
+        for ad, (beklenen, ters) in BEKLENEN.items():
+            with self.subTest(goruntu=ad):
+                gri = goruntu.yukle(ORNEK_KLASORU / ad)
+                self.assertEqual(klasik.madeni_para_say(gri, ters=ters).sayi, beklenen)
 
 
 class RaporTesti(unittest.TestCase):

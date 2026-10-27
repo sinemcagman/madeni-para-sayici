@@ -30,6 +30,8 @@ Ders notundaki kısaltılmış kod hazır `coins` görüntüsünde **27** bölge
 │   ├── klasik.py           # Algoritma
 │   ├── rapor.py            # JSON rapor
 │   └── gorsel.py           # 4 panelli PNG
+├── ornekler/               # Para sayısı bilinen test görüntüleri + üretici
+│   └── uret.py
 ├── tests/
 │   └── test_para_sayici.py
 └── requirements.txt
@@ -69,6 +71,22 @@ from para_sayici import madeni_para_say
 sonuc = madeni_para_say()
 print(sonuc.sayi)  # 24
 ```
+
+## Örnek test görüntüleri
+
+`ornekler/` klasöründe para sayısı bilinen 7 görüntü bulunur. Dosya adındaki sayı, görüntüdeki gerçek para sayısıdır.
+
+| Görüntü | Para | Neyi sınar | Komut |
+|---|---|---|---|
+| `coins_renkli.png` | 24 | RGB → gri dönüşümü | `python main.py ornekler/coins_renkli.png` |
+| `coins_ters.png` | 24 | Koyu para, açık zemin | `python main.py ornekler/coins_ters.png --ters` |
+| `coins_golgeli.png` | 24 | Güçlü eşit olmayan ışık | `python main.py ornekler/coins_golgeli.png` |
+| `sentetik_12.png` | 12 | Dağınık, farklı boyutlu paralar | `python main.py ornekler/sentetik_12.png` |
+| `sentetik_7_gurultulu.png` | 7 | Yoğun kamera gürültüsü | `python main.py ornekler/sentetik_7_gurultulu.png` |
+| `sentetik_9_koyu_para.png` | 9 | Koyu para, açık masa | `python main.py ornekler/sentetik_9_koyu_para.png --ters` |
+| `bos_masa.png` | 0 | Para yokken sahte para uydurmama | `python main.py ornekler/bos_masa.png` |
+
+Görüntüler sabit tohumla üretildiği için her seferinde aynı çıkar. Yeniden üretmek için: `python -m ornekler.uret`
 
 ## Testler
 
