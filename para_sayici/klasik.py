@@ -4,6 +4,7 @@ Adımlar:
   1. Işık düzeltme : küçük Gauss - büyük Gauss (arka plan çıkarma)
   2. Eşikleme      : Otsu yöntemi ile otomatik siyah/beyaz ayrımı
   3. Delik doldurma: para içindeki koyu desenleri kapatma
+     + morfolojik açma: paraları gürültüye bağlayan ince köprüleri koparma
   4. Etiketleme    : birbirine bağlı beyaz bölgeleri numaralandırma
   5. Alan filtresi : MIN_ALAN'dan küçük gürültü lekelerini atma
 """
@@ -12,7 +13,7 @@ from dataclasses import dataclass, field
 
 import numpy as np
 from scipy import ndimage as ndi
-from skimage import filters, measure
+from skimage import filters, measure, morphology
 
 from . import ayarlar  # from ... import DEĞİL: ayarlar.X canlı okunur
 from . import goruntu
@@ -67,7 +68,11 @@ def maske_olustur(duz, ters=False):
     """
     esik = filters.threshold_otsu(duz)
     maske = duz < esik if ters else duz > esik
-    return ndi.binary_fill_holes(maske), float(esik)
+    maske = ndi.binary_fill_holes(maske)
+    if ayarlar.ACMA_YARICAPI > 0:
+        # Açma = önce aşındır, sonra genişlet: ince köprüler kopar, paralar korunur.
+        maske = ndi.binary_opening(maske, structure=morphology.disk(ayarlar.ACMA_YARICAPI))
+    return maske, float(esik)
 
 
 def madeni_para_say(gri=None, sigma_gurultu=None, sigma_arkaplan=None,

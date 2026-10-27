@@ -12,6 +12,10 @@ SIGMA_GURULTU = 1.5
 # Görüntüden bu çıkarılınca eşit olmayan aydınlatma düzelir.
 SIGMA_ARKAPLAN = 40
 
+# Morfolojik açma (opening) için disk yarıçapı (piksel). Paraları kenardaki
+# gürültüye bağlayan ince köprüleri koparır. 0 verilirse açma yapılmaz.
+ACMA_YARICAPI = 4
+
 # Bundan küçük alanlı (piksel) bölgeler para değil, gürültü sayılır.
 MIN_ALAN = 400
 
